@@ -22,15 +22,10 @@ paths:
       tags:
         - Products
       parameters:
-        - titulo: String
-          descripcion: String
-          precio: Number
-          thumbnail: Path
-          status: Boolean
-          code: String
-          stock: Number
-          category: String
-          owner: String
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a buscar
           schema:
             $type: String
       responses:
