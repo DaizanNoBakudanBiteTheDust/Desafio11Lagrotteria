@@ -9,11 +9,31 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const getProducts = async (req, res) => {
-    const products = getAllProducts();
-    res.send({
-            products
-    })
-}
+        try {
+            const products = await getAllProducts(req);
+            res.json({ products });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    };
+    const getProductById = async (req, res) => {
+        try {
+                const {
+                        pid
+                } = req.params;
+            const product = await idProduct(pid);
+    
+            if (product.status === 404) {
+                return res.status(404).json(product);
+            }
+    
+            res.json({ product });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    };
 
 const postProducts = async (req, res) => {
 
@@ -117,5 +137,6 @@ export{
     getProducts,
     postProducts,
     updateProductById,
-    deleteProducts
+    deleteProducts,
+    getProductById
 }

@@ -16,9 +16,9 @@ paths:
                   $ref: '#/components/schemas/Products'
         "500":
           description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
-  /api/products}:
+  /api/products/{pid}:
     get:
-      summary: Este servicio obtiene todos los productos
+      summary: Este servicio obtiene solo un producto
       tags:
         - Products
       parameters:
@@ -66,9 +66,9 @@ paths:
               $ref: '#components/requestBodies/updateProduct'
       responses:
         "200":
-          description: El usuario fue actualizado correctamente
+          description: El producto fue actualizado correctamente
         "404":
-          description: El usuario no fue encontrado en BDD
+          description: El producto no fue encontrado en BDD
         "500":
           description:  Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
 components:

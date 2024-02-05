@@ -17,4 +17,9 @@ export default class productsRepository {
             throw error; // Relanzar el error para que sea manejado en otro lugar si es necesario
         }
     };
+
+    findById = async(id) => {
+        const result = await daoProducts.getProductById(id);
+        return result;
+    }
 }

@@ -5,7 +5,8 @@ import {
         deleteProducts,
         getProducts,
         postProducts,
-        updateProductById
+        updateProductById,
+        getProductById
 } from '../../controlers/products.controller.js';
 import { generateProduct } from '../../utils.js';
 
@@ -17,6 +18,8 @@ const router = Router();
 
 router.get('/', getProducts);
 
+//by id
+router.get('/:pid', getProductById);
 
 // postea los productos
 
