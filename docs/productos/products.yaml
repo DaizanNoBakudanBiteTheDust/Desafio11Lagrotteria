@@ -2,7 +2,6 @@ paths:
   /api/products:
     get:
       summary: Este servicio obtiene el listado de todos los Productos
-      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
       tags:
         - Products
       responses:
@@ -15,6 +14,25 @@ paths:
                 items:
                   $ref: '#/components/schemas/Products'
         "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+    post:
+      summary: Este servicio crea un nuevo producto
+      tags:
+         - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+         "200":
+           description: El producto fue creado satisfactoriamente
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/Products'
+         "500":
           description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
   /api/products/{pid}:
     get:
@@ -30,7 +48,7 @@ paths:
             $type: String
       responses:
         "200":
-          description: Los productos fueron obtenidos correctamente correctamente de nuestra BDD
+          description: Los productos fueron obtenidos correctamente de nuestra BDD
           content:
             application/json:
               schema:
@@ -42,15 +60,10 @@ paths:
       tags:
         - Products
       parameters:
-        - titulo: String
-          descripcion: String
-          precio: Number
-          thumbnail: Path
-          status: Boolean
-          code: String
-          stock: Number
-          category: String
-          owner: String
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a buscar
           schema:
             $type: String
       requestBody:
@@ -65,7 +78,8 @@ paths:
         "404":
           description: El producto no fue encontrado en BDD
         "500":
-          description:  Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+
 components:
   schemas:
     Products:
@@ -105,51 +119,53 @@ components:
         _id: ObjectId("jhaskd4545")
         titulo: Plato
         descripcion: Plato de porcelana trizado
-        precio: 20$
+        precio: 20
         status: true
         thumbnail: https://img.freepik.com/foto-gratis/plato-vacio-sobre-elegancia-negra-sencillez-generada-ia_188544-36383.jpg?size=338&ext=jpg&ga=GA1.1.87170709.1707091200&semt=sph
         code: sadsfdfadfadsfas
         stock: 12
         category: hogar
         owner: Admin
+
   requestBodies:
     updateProduct:
       type: Object
       properties:
         _id:
           type: ObjectId
-          description: Id autogenrado por mongodb, es el id del producto
+          description: Id autogenerado por MongoDB, es el id del producto
         titulo:
           type: String
           description: Nombre del producto
-        descripcion: 
+        descripcion:
           type: String
-          description: Descripcion/detalle del producto
-        precio:  
+          description: Descripción/detalle del producto
+        precio:
           type: Number
           description: Precio del producto
-        status: 
+        status:
           type: Boolean
-          description: disponibilidad del producto
-        thumbnail: 
+          description: Disponibilidad del producto
+        thumbnail:
           type: String
-          description: enlace a la imagen del producto 
-        code: 
+          description: Enlace a la imagen del producto
+        code:
           type: String
-          description: codigo identificador del producto el cual debe ser unico
-        stock:  
+          description: Código identificador del producto, debe ser único
+        stock:
           type: Number
           description: Cantidad de productos restantes
-        category: 
+        category:
           type: String
-          description: categoria en la cual estara disponible el producto
-        owner: 
+          description: Categoría en la cual estará disponible el producto
+        owner:
           type: String
-          description: Rol que publico el producto 
+          description: Rol que publicó el producto
       example:
+        _id: ObjectId("jhaskd4545")
         titulo: Plato
         descripcion: Plato de porcelana trizado
-        precio: 20$
+        precio: 20
         status: true
         thumbnail: https://img.freepik.com/foto-gratis/plato-vacio-sobre-elegancia-negra-sencillez-generada-ia_188544-36383.jpg?size=338&ext=jpg&ga=GA1.1.87170709.1707091200&semt=sph
         code: sadsfdfadfadsfas
