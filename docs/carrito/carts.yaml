@@ -1,0 +1,174 @@
+paths:
+  /api/carts:
+    get:
+      summary: Este servicio obtiene el listado de todos los carritos
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los Carritos fueron obtenidos satisfactoriamente de la BDD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Carts'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+    post:
+      summary: Este servicio crea un nuevo Carrito
+      tags:
+         - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+         "200":
+           description: El Carrito fue creado satisfactoriamente
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/Carts'
+         "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+  /api/carts/{cid}:
+    get:
+      summary: Este servicio obtiene solo un Carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del Carrito a buscar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: Los Carritos fueron obtenidos correctamente de nuestra BDD
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Carts'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+    put:
+      summary: Este servicio actualiza el Carrito a partir de su cid
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del Carrito a buscar
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: El Carrito fue actualizado correctamente
+        "404":
+          description: El Carrito no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: "Id autogenerado por MongoDB, es el id del Carrito"
+        titulo:
+          type: String
+          description: "Nombre del Carrito"
+        descripcion:
+          type: String
+          description: "Descripción/detalle del Carrito"
+        precio:
+          type: Number
+          description: "Precio del Carrito"
+        status:
+          type: Boolean
+          description: "Disponibilidad del Carrito"
+        thumbnail:
+          type: String
+          description: "Enlace a la imagen del Carrito"
+        code:
+          type: String
+          description: "Código identificador del Carrito, debe ser único"
+        stock:
+          type: Number
+          description: "Cantidad de Carritos restantes"
+        category:
+          type: String
+          description: "Categoría en la cual estará disponible el Carrito"
+        owner:
+          type: String
+          description: "Rol que publicó el Carrito"
+      example:
+        _id: ObjectId("jhaskd4545")
+        titulo: Plato
+        descripcion: Plato de porcelana trizado
+        precio: 20
+        status: true
+        thumbnail: https://img.freepik.com/foto-gratis/plato-vacio-sobre-elegancia-negra-sencillez-generada-ia_188544-36383.jpg?size=338&ext=jpg&ga=GA1.1.87170709.1707091200&semt=sph
+        code: sadsfdfadfadsfas
+        stock: 12
+        category: hogar
+        owner: Admin
+
+  requestBodies:
+    updateProduct:
+      type: Object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por MongoDB, es el id del Carrito
+        titulo:
+          type: String
+          description: Nombre del Carrito
+        descripcion:
+          type: String
+          description: Descripción/detalle del Carrito
+        precio:
+          type: Number
+          description: Precio del Carrito
+        status:
+          type: Boolean
+          description: Disponibilidad del Carrito
+        thumbnail:
+          type: String
+          description: Enlace a la imagen del Carrito
+        code:
+          type: String
+          description: Código identificador del Carrito, debe ser único
+        stock:
+          type: Number
+          description: Cantidad de Carritos restantes
+        category:
+          type: String
+          description: Categoría en la cual estará disponible el Carrito
+        owner:
+          type: String
+          description: Rol que publicó el Carrito
+      example:
+        _id: ObjectId("jhaskd4545")
+        titulo: Plato
+        descripcion: Plato de porcelana trizado
+        precio: 20
+        status: true
+        thumbnail: https://img.freepik.com/foto-gratis/plato-vacio-sobre-elegancia-negra-sencillez-generada-ia_188544-36383.jpg?size=338&ext=jpg&ga=GA1.1.87170709.1707091200&semt=sph
+        code: sadsfdfadfadsfas
+        stock: 12
+        category: hogar
+        owner: Admin

@@ -275,7 +275,7 @@ const updateCartProduct = async (req, res) => {
 
 const getCarts = async (req, res) => {
     try {
-            const cart = getAllCarts();
+            const cart = await getAllCarts();
             res.send({
                     status: 'success',
                     payload: cart

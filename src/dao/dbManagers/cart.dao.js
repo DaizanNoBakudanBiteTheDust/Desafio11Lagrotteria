@@ -9,6 +9,7 @@
         getAll = async () => {
 
             const carts = await cartsModel.find().lean();
+            console.log(carts)
             return carts;
         }
 
