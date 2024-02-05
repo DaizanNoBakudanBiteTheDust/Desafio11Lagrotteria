@@ -73,7 +73,7 @@ paths:
 
   /api/carts/{cid}/products/{pid}:
     post:
-      summary: Este servicio obtiene el producto del carrito seleccionado
+      summary: Este servicio postea el producto en el carrito seleccionado
       tags:
         - Carts
       parameters:
@@ -94,7 +94,41 @@ paths:
           description: Los Carritos fueron obtenidos satisfactoriamente de la BDD
         "500":
           description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
-
+    put:
+      summary: Este servicio actualiza producto del carrito seleccionado
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del Carrito a buscar
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a buscar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer  # El tipo de contenido es un número entero (quantity)
+                  minimum: 0     # Ajusta según tus requisitos
+      responses:
+        "200":
+          description: La cantidad del producto en el carrito fue actualizada correctamente
+        "404":
+          description: El Carrito o el Producto no fueron encontrados en la BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+ 
 components:
   schemas:
     Carts:
