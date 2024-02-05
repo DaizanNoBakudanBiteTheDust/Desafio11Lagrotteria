@@ -13,10 +13,13 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import compression from 'express-compression';
 import winston from 'winston';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 
 //dependencias de ruta
 import {
-        __dirname
+        __dirname,
+        __maindirname
 }
 from './utils.js';
 import configs from "./config.js";
@@ -58,6 +61,22 @@ try {
 } catch (error) {
         console.error("conexion fallida")
 }
+console.log(__maindirname)
+
+const swaggerOptions = {
+        definition: {
+            openapi: '3.0.1',
+            info: {
+                title: 'Documentación del Carrito de compras',
+                description: 'API pensada para resolver las interacciones de un carrito de compra'
+            }
+        },
+        apis: [`${__maindirname}/docs/**/*.yaml`]
+    }
+    
+    const specs = swaggerJsdoc(swaggerOptions);
+    
+    app.use('/api/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 
 // configuracion passport

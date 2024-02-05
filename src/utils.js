@@ -5,6 +5,7 @@ import {
     dirname,
     join
 } from 'path';
+import path from 'path';
 import configs from "./config.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -13,6 +14,7 @@ import { fakerES as faker } from '@faker-js/faker';
 const __filename = fileURLToPath(
     import.meta.url);
 const __dirname = dirname(__filename);
+const __maindirname = path.join(__dirname, '..');
 
 const createHash = password =>
     bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -69,6 +71,7 @@ const generateProduct = () => {
 
 export {
     __dirname,
+    __maindirname,
     createHash,
     isValidPassword,
     generateToken,
