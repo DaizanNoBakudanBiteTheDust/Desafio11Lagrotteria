@@ -22,8 +22,8 @@ const createHash = password =>
     const PRIVATE_KEY = configs.privateHash;
 
 //Valida pass
-const isValidPassword = (plainPassword, hashedPassword) =>
-    bcrypt.compareSync(plainPassword, hashedPassword);
+const isValidPassword = (user, password) =>
+    bcrypt.compareSync(password, user.password);
 
  //generacion de token
  

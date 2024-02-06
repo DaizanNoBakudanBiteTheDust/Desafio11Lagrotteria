@@ -237,6 +237,7 @@ const updatePassword = async (req, res) => {
     const {password} = req.body;
     const {token} = req.params;
 
+    console.log(req.body.password)
     try {
         const decode = await decodedToken(token); 
     
@@ -246,14 +247,12 @@ const updatePassword = async (req, res) => {
         const user = await getUserByEmail(decode.email)
 
         console.log(user)
-
-        const passwordToUpdate = {
-            password: createHash(password)
-        };
-
-        const duplicatedPass = await isValidPassword(user.password, passwordToUpdate);
-
+        const duplicatedPass = await isValidPassword(user, password);
         console.log(duplicatedPass)
+
+        const newPassword = await createHash(password);
+
+        console.log(newPassword)
 
     if (duplicatedPass) {
       return res.status(400).send({
@@ -262,9 +261,7 @@ const updatePassword = async (req, res) => {
       });
     }
 
-    // actualizo el password
-    const newPass = await createHash(password);
-    console.log(newPass)
+       const result = await updateUserPass(user.email, newPassword);
 
     res.send({
         status: "success",

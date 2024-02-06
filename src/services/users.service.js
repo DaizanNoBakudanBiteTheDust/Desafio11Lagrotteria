@@ -13,8 +13,8 @@ const saveUser = async (user) => {
     return userCreate;
 }
 
-const updateUserPass = async(user) => {
-    const result = await manager.updatePass(user);
+const updateUserPass = async(email, password) => {
+    const result = await manager.updatePass(email, password);
     return result; 
 }
 
